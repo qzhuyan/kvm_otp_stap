@@ -1,0 +1,12 @@
+#cloud-config
+users:
+  - default
+  - name: cloud-user
+    lock-passwd: true
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    ssh-authorized-keys:
+      - some ssh pub key here
+
+# Local Variables:
+# mode: yaml
+# End:

@@ -1,0 +1,5 @@
+kvm -hda rootfs.qcow2 \
+    -drive file=seed.iso,if=virtio \
+    -smp 2 \
+    -m 2048 -net nic -net user,hostfwd=tcp:127.0.0.1:4444-:22 \
+    -curses -nographic  -chardev stdio,id=stdio,mux=on,signal=off
