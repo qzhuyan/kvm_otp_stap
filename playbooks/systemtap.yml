@@ -1,14 +1,20 @@
 ---
 - hosts: all
   sudo: yes
+
+  vars_prompt:
+    - name: "redhat_login"
+      prompt: "what is your redhat login?"
+      default: null
+    - name: "redhat_login_password"
+      prompt: "what is your redhat password?"
+      default: null
+
   tasks:
     # - name: install yum-config-manager
     #   yum: name=yum-config-manager state=installed
-    - name: add cloud-user to group
-      user: name=cloud-user append=yes groups=stapdev
-
     - name: enable debug symbol
-      redhat_subscription: state=present username=user password=password autosubscribe=true
+      redhat_subscription: state=present username={{ redhat_login }} password={{ redhat_login_password }} autosubscribe=true
 
     - name: enable repodebug symbole
       command: subscription-manager repos --enable rhel-6-server-debug-rpms
@@ -16,11 +22,14 @@
     - name: install yum packages
       yum: name={{ item  }}  state=latest
       with_items:
-        - kernel
-        - kernel-devel
-        - kernel-debuginfo
+        - kernel-{{ kernel_version }}
+        - kernel-devel-{{ kernel_version }}
+        - kernel-debuginfo-{{ kernel_version }}
         - systemtap
         - systemtap-runtime
+
+    - name: add cloud-user to group
+      user: name=cloud-user append=yes groups=stapdev
 
     - name: install the 'Development tools' package group
       yum: name="@Development tools" state=present
