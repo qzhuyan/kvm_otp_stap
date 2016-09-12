@@ -5,7 +5,11 @@ users:
     lock-passwd: true
     sudo: ALL=(ALL) NOPASSWD:ALL
     ssh-authorized-keys:
-      - some ssh pub key here
+      - ssh-dss AAAAB3NzaC1kc3MAAACBAIaV29gxlGNBeIk0FSlTOmPwRRXsBms6Jd8HQr/iSM3DioB3FfYMDS/76Qfr4LUI2C2Xf5WH5WnbCAg7Kb+v/RhA5bSKr8efn5g71xqNUOBBROBvAF8OOlo5BhylKHLjl0lFfXTk7BoCHm6bqjRXDWn27S9MNQVgVfT6tDIu1E/xAAAAFQCNSj1a2rLBieKF+mirBu6MmM/UUwAAAIBf3NockgYGZh3wi1nvtl8ZCa4cp0YO75nc4BaXZmqSOeh6ElfWeNyICBNmZyK/g4/wJjEqBihs24KYDgc8eKxnvTjRydso1vbb8AFYOD7WLHOJgmc8gMrs9eJM5DcRSI45rqWp4lfK7qNC4WQap+CI4I5lPUjtB3jEhZmoFcdENAAAAIA6ddqv29S805RN4DXYUHbPy+oFfMqj8X3iRv1xqXMqjVkKGQ9w9Fj+3wdmBevw5B+kCc/mXLOWg9MMGuoSU+8jOwmwa7LPo5FLu6j781VUV1ehI+3lmE3RNvZUPu6g+41Vjah+KMl+KsGIWPW7AHzr+on2zKCmHZLQaq94dpfDBA== william-zhuwei.yang@SE-C02PT2KQG8WM
+
+bootcmd:
+  - [ ip, link, set, ens3, up ]
+  - [ dhclient, ens3 ]
 
 # Local Variables:
 # mode: yaml

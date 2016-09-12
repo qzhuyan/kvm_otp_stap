@@ -1,5 +1,24 @@
-[all]
-127.0.0.1:4444
+[rhel]
+vm_rhel1 ansible_port=4444 ansible_host=127.0.0.1
 
-[all:vars]
+
+[rhel:vars]
+ansible_ssh_user=cloud-user
 kernel_version=2.6.32-642.el6
+otp_rel=R15B03-1
+otp_build=R15B03-1
+extra_repo=""
+yum_packages=kernel-{{ kernel_version }},kernel-devel-{{ kernel_version }},kernel-debuginfo-{{ kernel_version }},systemtap,systemtap-runtime
+
+
+[centos]
+vm_centos1 ansible_port=4445 ansible_host=127.0.0.1
+
+[centos:vars]
+ansible_ssh_user=cloud-user
+kernel_version=3.10.0-327.22.2.el7
+otp_rel="git https://github.com/erlang/otp.git maint-17"
+otp_build=kotp17.1
+extra_repo="base-debuginfo"
+yum_packages=kernel-{{ kernel_version }},kernel-devel-{{ kernel_version }},kernel-debuginfo-{{ kernel_version }},systemtap,systemtap-runtime
+private_ssh_key=~/.ssh/id_dsa

@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: rhel
   sudo: yes
 
   vars_prompt:
@@ -10,40 +10,13 @@
       prompt: "what is your redhat password?"
       default: null
 
-  tasks:
-    # - name: install yum-config-manager
-    #   yum: name=yum-config-manager state=installed
-    - name: enable debug symbol
-      redhat_subscription: state=present username={{ redhat_login }} password={{ redhat_login_password }} autosubscribe=true
+  roles:
+    - rhel
+    - common
 
-    - name: enable repodebug symbole
-      command: subscription-manager repos --enable rhel-6-server-debug-rpms
 
-    - name: install yum packages
-      yum: name={{ item  }}  state=latest
-      with_items:
-        - kernel-{{ kernel_version }}
-        - kernel-devel-{{ kernel_version }}
-        - kernel-debuginfo-{{ kernel_version }}
-        - systemtap
-        - systemtap-runtime
-
-    - name: add cloud-user to group
-      user: name=cloud-user append=yes groups=stapdev
-
-    - name: install the 'Development tools' package group
-      yum: name="@Development tools" state=present
-
-    - name: restart machine
-      shell: sleep 2 && shutdown -r now "Ansible updates triggered"
-      async: 1
-      poll: 0
-      sudo: true
-      ignore_errors: true
-
-    - name: waiting for server to come back
-      local_action: wait_for host={{ inventory_hostname }} state=started delay=20 timeout=60 connect_timeout=5
-      sudo: false
-
-    - name: verify stap works
-      command: stap -v -e 'probe vfs.read {printf("read performed\n"); exit()}'
+- hosts: centos
+  sudo: yes
+  roles:
+    - centos
+    - common

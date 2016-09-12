@@ -1,0 +1,24 @@
+---
+- name: install libs
+  sudo: yes
+  yum: name="wget,ncurses-libs,ncurses-devel,elfutils-devel,openssl-devel,autoconf,java-1.8.0-openjdk-devel" state=latest
+
+- name: download kerl
+  get_url: url=http://raw.githubusercontent.com/kerl/kerl/master/kerl dest=/usr/bin/kerl owner=root mode=a+x
+
+- name: upload ssh key for testing
+  when: private_ssh_key is defined
+  copy: src={{ private_ssh_key }} dest=.ssh/
+
+- name: update kerl
+  command: kerl update releases
+
+- name: install new systemtap
+  sudo: yes
+  script: build_systemtap.sh
+
+- name: kerl build
+  command:  kerl build {{ otp_rel }} {{ otp_build }}
+
+- name: kerl install
+  command:  kerl install {{ otp_build }} ~/OTP/{{ otp_build }}

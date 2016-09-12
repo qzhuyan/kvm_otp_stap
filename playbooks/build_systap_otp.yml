@@ -3,24 +3,5 @@
   sudo: no
   environment:
     KERL_CONFIGURE_OPTIONS: "--with-dynamic-trace=systemtap --with-ssl"
-  tasks:
-    - name: install libs
-      sudo: yes
-      yum: name="wget,ncurses-libs,ncurses-devel,elfutils-devel,devtoolset-2-elfutils-devel,openssl-devel,autoconf,java-1.8.0-openjdk-devel" state=installed
-
-    - name: install kerl
-      sudo: yes
-      copy: dest=/usr/bin/kerl src=kerl owner=root mode=a+x
-
-    - name: update kerl
-      command: kerl update releases
-
-    - name: install new systemtap
-      sudo: yes
-      script: build_systemtap.sh
-
-    - name: kerl build
-      command:  kerl build R15B03-1 r15b03-1-stap
-
-    - name: kerl install
-      command:  kerl install r15b03-1-stap ~/OTP/r15b03-1-stap
+  roles:
+    - otp-systap

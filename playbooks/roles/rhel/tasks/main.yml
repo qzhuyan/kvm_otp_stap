@@ -1,0 +1,5 @@
+- name: enable rhel debug symbol
+  redhat_subscription: state=present username={{ redhat_login }} password={{ redhat_login_password }} autosubscribe=true
+
+- name: enable rhel repodebug symbole
+  command: subscription-manager repos --enable rhel-6-server-debug-rpms

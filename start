@@ -1,5 +1,9 @@
-kvm -hda rootfs.qcow2 \
+#!/bin/bash
+port=$1
+img=$2
+
+kvm -hda $img \
     -drive file=seed.iso,if=virtio \
     -smp 2 \
-    -m 2048 -net nic -net user,hostfwd=tcp:127.0.0.1:4444-:22 \
+    -m 1024 -net nic -net user,hostfwd=tcp:127.0.0.1:$port-:22 \
     -curses -nographic  -chardev stdio,id=stdio,mux=on,signal=off
