@@ -3,5 +3,6 @@
   sudo: no
   environment:
     KERL_CONFIGURE_OPTIONS: "--with-dynamic-trace=systemtap --with-ssl"
+    GIT_SSH_COMMAND: "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
   roles:
     - otp-systap

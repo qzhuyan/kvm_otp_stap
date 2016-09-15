@@ -4,21 +4,38 @@
   yum: name="wget,ncurses-libs,ncurses-devel,elfutils-devel,openssl-devel,autoconf,java-1.8.0-openjdk-devel" state=latest
 
 - name: download kerl
+  sudo: yes
   get_url: url=http://raw.githubusercontent.com/kerl/kerl/master/kerl dest=/usr/bin/kerl owner=root mode=a+x
 
-- name: upload ssh key for testing
+- name: read content of key
   when: private_ssh_key is defined
-  copy: src={{ private_ssh_key }} dest=.ssh/
+  local_action: shell cat {{ private_ssh_key }}
+  register: data
+
+- name: upload ssh key for pulling git repos
+  when: private_ssh_key is defined
+  lineinfile: dest=.ssh/id_dsa line={{ data.stdout }} mode=700 create=yes owner=cloud-user
+
+# - name: upload ssh private key for git pull
+#   copy: src={{ private_ssh_key }} dest=".ssh/id_dsa"
 
 - name: update kerl
   command: kerl update releases
+
+- name: ssh no
+  lineinfile: dest=.ssh/config line="StrictHostKeyChecking no" mode=700 create=yes owner=cloud-user
 
 - name: install new systemtap
   sudo: yes
   script: build_systemtap.sh
 
 - name: kerl build
+  sudo: no
+  environment:
+    KERL_CONFIGURE_OPTIONS: "--with-dynamic-trace=systemtap --with-ssl"
+    GIT_SSH_COMMAND: "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
   command:  kerl build {{ otp_rel }} {{ otp_build }}
 
 - name: kerl install
+  sudo: no
   command:  kerl install {{ otp_build }} ~/OTP/{{ otp_build }}

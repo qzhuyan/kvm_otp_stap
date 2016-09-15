@@ -17,6 +17,9 @@
 
 - hosts: centos
   sudo: yes
+  environment:
+    KERL_CONFIGURE_OPTIONS: "--with-dynamic-trace=systemtap --with-ssl --disable-hipe"
   roles:
     - centos
     - common
+    - otp-systap
