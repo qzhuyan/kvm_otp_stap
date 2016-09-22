@@ -13,7 +13,7 @@
   roles:
     - rhel
     - common
-
+    - otp-systap
 
 - hosts: centos
   sudo: yes
