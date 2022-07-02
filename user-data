@@ -5,7 +5,8 @@ users:
     lock-passwd: true
     sudo: ALL=(ALL) NOPASSWD:ALL
     ssh-authorized-keys:
-      - some ssh pub key here
+      - |
+        ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDQCm07iXNa2xQJ3AiDVxuiJsBA0u6qXgHn88Q0WBiLtohq2ruFEQIZyWFt1C5eKNGf/aUISqo3hwHU/OxC0V5b1Bx5c3rLNXeDL2qebY212Lz+Zn459V3JCkvwdxLzi+t8lgrH/AGN4qsLydWuCSx9NBnh23+QVLD2Cpe68ojvKRk1LDiJY4QKLbhVcuW+MT+4Mw+blzu/maTlmqOUVp4vFA7vpK65OQ28Oq4WeMP+OHoW8fUPDYFiE3I9THCfsY1KWnBdRBWvHDolvuN6ThZWMXHO+018XG9KM4hNDvS6v0NrO8whmQfWTAY8otWCHssLQGFfUPexkil2UMDSu399RQrZsN7QFmBtMMiKxj9ylcpKN1ZSdqwgqAp0eY4ajcQp2NZLRBhn0eLXai/4/MXveTLwg/Db1jNnpfWBYZFpX3ITghJzW5QbHMG7v9Mu+Zve6XMS722q1wh0TZZ/Ol/Zo7jeBbIFvaXVJpa1hGioUnesIw5GZxgLrEgMehxroVc= ezhuwya@ezhuwya-dev-vbox
 
 # Local Variables:
 # mode: yaml

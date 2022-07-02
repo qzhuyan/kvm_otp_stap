@@ -1,4 +1,4 @@
-WHAT
+# WHAT
 
 bring you a vm that has systemtap erlang otp install.
 
@@ -9,12 +9,31 @@ DEPS
 - internet
 
 
-HOW:
-- Update *user-data* with your ssh pub key
-- download a rhel kvm guest image and rename *rootfs.qcow2* and put in same dir
-- do *make* and wait build finish
-- verify login with ssh
-  ssh -p 4444 -l cloud-user 127.0.0.1
+# HOW:
+1. Download KVM image from 
+  
+  - ubuntu 
+    https://cloud-images.ubuntu.com/
+
+  - centos7
+    https://cloud.centos.org/altarch/7/images/
+
+  - AWS Linux 2
+    https://cdn.amazonlinux.com/os-images/2.0.20220207.1/kvm/
+
+1. Update image with root password (default: abc123)
+
+  ```sh
+   ./fix_password.sh $Image $hostname
+  ```
+  
+1. Start vm
+  ```
+  ./start $Image
+  
+  ```
+
+1. to exit 'c-a x'
 
 
 - TODO

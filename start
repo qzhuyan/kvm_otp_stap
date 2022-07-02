@@ -1,5 +1,15 @@
-kvm -hda rootfs.qcow2 \
-    -drive file=seed.iso,if=virtio \
+#!/usr/bin/env bash
+#
+rootdev=$1
+shift
+kvm -hda "$rootdev" \
     -smp 2 \
-    -m 2048 -net nic -net user,hostfwd=tcp:127.0.0.1:4444-:22 \
-    -curses -nographic  -chardev stdio,id=stdio,mux=on,signal=off
+    -m 2048 \
+    -netdev user,id=hostnet0,hostfwd=tcp:127.0.0.1:4444-:22 \
+    -device virtio-net-pci,netdev=hostnet0,id=net0,mac=52:54:00:2b:c2:79,bus=pci.0,addr=0x3 \
+    -curses -nographic $@ #-chardev stdio,id=stdio,mux=on,signal=off
+#
+    # -netdev user,id=user.0 -device e1000,netdev=user.0 \
+    #-net nic -net user,hostfwd=tcp:127.0.0.1:4444-:22 \
+    # -netdev tap,id=net0 -device e1000,netdev=net0,mac=52:54:00:12:34:56 \
+    # -drive file=seed.iso,if=virtio \
